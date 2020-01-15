@@ -10,7 +10,7 @@ export class CouponService {
         const form = new FormData();
         form.append('query', 'SELECT * FROM cpnc_DealCoupon  where redemptionCode = '+ id);
         // form.append('query', 'SELECT * FROM cpnc_User  where lastName like "%Penz%" limit 12');
-        console.log(form);
+        // console.log(form);
         const result = await fetch("https://megusta.do/reports/queries", {headers:form.getHeaders(), method:'POST', body:form });
         const response = await result.json();
         return response[0];
@@ -39,7 +39,7 @@ export class CouponService {
       async validateCoupon(id,companyId){
           try{
 
-          console.log("EL ID", id, companyId);
+        //   console.log("EL ID", id, companyId);
           
         const coupon = await this.getCoupon(id);
         //   console.log(await coupon.dealId)
@@ -50,7 +50,7 @@ export class CouponService {
               const {status, dealId} = coupon;
               const deal = await this.getDeal(dealId);
               const expirationDate = new Date(deal.expire*1000);
-              console.log(expirationDate);
+            //   console.log(expirationDate);
               const currentDate = new Date();
               console.log(currentDate<expirationDate);
               if(deal.companyId==companyId){
