@@ -59,7 +59,7 @@ export class CouponService {
                     if(status==1){
                         if(currentDate<=expirationDate){
                             // this.redeemCoupon(coupon.id);
-                            return ({couponId:coupon.id, isValid:true});
+                            return ({couponId:coupon.id, isValid:true, deal});
                         
                         } else{
                             console.log("This coupon is expired");
