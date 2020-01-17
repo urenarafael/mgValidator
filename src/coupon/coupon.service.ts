@@ -37,7 +37,7 @@ export class CouponService {
         // form.append('query', 'SELECT * FROM cpnc_User  where lastName like "%Penz%" limit 12');
         const result = await fetch("https://megusta.do/reports/queries/action", { headers: form.getHeaders(), method: 'POST', body: form });
         const response = await result.json();
-        return response[0];
+        return response;
     }
 
     async validateCoupon(id, companyId) {
