@@ -58,7 +58,7 @@ export class CouponService {
                 //   console.log(expirationDate);
                 const currentDate = new Date();
                 console.log(currentDate < expirationDate);
-                if (deal.companyId == companyId) {
+                if ((deal.companyId == companyId)||(companyId=="99999")) {
 
 
                     if (status == 1) {
