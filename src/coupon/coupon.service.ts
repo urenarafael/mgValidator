@@ -159,8 +159,9 @@ export class CouponService {
     
     if (response && response.updated) {
       await this.sendConfirmation(id, companyId);
+      return response;
     }
-    return response;
+    
   }
 
   async sendConfirmation(couponId, companyId) {
