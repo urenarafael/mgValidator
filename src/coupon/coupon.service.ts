@@ -158,6 +158,7 @@ export class CouponService {
     const response = await result.json();
     
     if (response && response.updated) {
+        console.log("RESPONSEEEE", response);
       await this.sendConfirmation(response.id, companyId);
       return response;
     }
