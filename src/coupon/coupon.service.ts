@@ -159,7 +159,7 @@ export class CouponService {
     
     if (response && response.updated) {
         console.log("RESPONSEEEE", response);
-      await this.sendConfirmation(response.id, companyId);
+      await this.sendConfirmation(id, companyId);
       return response;
     }
     
