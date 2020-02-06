@@ -176,7 +176,10 @@ export class CouponService {
       method: "POST",
       body: form
     });
-    const response = await result.json();
+    const response = await result.text();
+    console.log(response);
+    return response;
+    // const response = await result.json();
 
     const { dealId, userId } = response;
 
