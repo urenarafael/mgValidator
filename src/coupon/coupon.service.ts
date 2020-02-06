@@ -197,7 +197,7 @@ export class CouponService {
   }
   async makeOrder(email, amount, utils) {
     let formData = new FormData();
-    formData.append("user", JSON.stringify(utils.storeUser));
+    formData.append("user", utils.storeUser);
 
     formData.append("customer_phone", email);
 
@@ -206,11 +206,12 @@ export class CouponService {
     formData.append("merchant_id", utils.merchantId);
     formData.append("game_id", "0");
     formData.append("reference", "PDV-" + utils.terminalId);
-    
+    console.log(formData);
     try {
       let result = await fetch("https://api.sunchat.com/v2/orders", {method:"POST", body:formData});
-    //   console.log(result);
-      return await result.json();
+      const finalResult = await result.json();
+      console.log("EY FINAI", finalResult);
+      return finalResult;
     } catch (e) {
       console.log(e);
       return e;
