@@ -171,7 +171,7 @@ export class CouponService {
     form.append("query", "SELECT * FROM cpnc_DealCoupon WHERE id=" + couponId);
 
     // form.append('query', 'SELECT * FROM cpnc_User  where lastName like "%Penz%" limit 12');
-    const result = await fetch("https://megusta.do/reports/queries/", {
+    const result = await fetch("https://megusta.do/reports/queries", {
       headers: form.getHeaders(),
       method: "POST",
       body: form
