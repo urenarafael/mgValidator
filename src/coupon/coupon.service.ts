@@ -178,10 +178,10 @@ export class CouponService {
     });
     const response = await result.json();
     console.log(response);
-    return response;
+    
     // const response = await result.json();
 
-    const { dealId, userId } = response;
+    const { dealId, userId } = response[0];
 
     const userEmail = await this.getUserEmail(userId);
 
