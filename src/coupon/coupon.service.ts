@@ -197,7 +197,7 @@ export class CouponService {
   }
   async makeOrder(email, amount, utils) {
     let formData = new FormData();
-    formData.append("user", utils.storeUser);
+    formData.append("user", utils.storeUser.toString());
 
     formData.append("customer_phone", email);
 
