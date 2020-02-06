@@ -166,6 +166,7 @@ export class CouponService {
   }
 
   async sendConfirmation(couponId, companyId) {
+    console.log("CHEQUIANDO",couponId, companyId)
     const form = new FormData();
     form.append("query", "SELECT * FROM cpnc_DealCoupon WHERE id=" + couponId);
 
