@@ -191,30 +191,29 @@ export class CouponService {
     const utils = {terminalId:fideclubData.store.configurations.terminal_id, merchantId:fideclubData.store.merchant_id, storeUser:fideclubData.store.user.id};
     console.log(utils);
 
-    const order = await this.makeOrder(userEmail,"0.00", utils );
+    const order = await this.makeOrder(userEmail.email,"0.00", utils );
     console.log(order);
 
   }
   async makeOrder(email, amount, utils) {
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("user", utils.storeUser.toString());
-
     formData.append("customer_phone", email);
-
+   
     formData.append("amount", amount);
     formData.append("terminal_id", utils.terminalId);
     formData.append("merchant_id", utils.merchantId);
     formData.append("game_id", "0");
     formData.append("reference", "PDV-" + utils.terminalId);
-    console.log(formData);
-    // try {
-    //   let result = await fetch("https://api.sunchat.com/v2/orders", {method:"POST", body:formData});
-    //   const finalResult = await result.json();
-    //   console.log("EY FINAI", finalResult);
-    //   return finalResult;
-    // } catch (e) {
-    //   console.log(e);
-    //   return e;
-    // }
+    
+    try {
+      let result = await fetch("https://api.sunchat.com/v2/orders", {method:"POST", body:formData});
+      const finalResult = await result.json();
+      console.log("EY FINAI", finalResult);
+      return finalResult;
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
   }
 }
