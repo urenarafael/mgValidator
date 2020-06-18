@@ -16,7 +16,7 @@ export class CouponService {
       const result = await fetch("https://megusta.do/reports/queries", {
         headers: form.getHeaders(),
         method: "POST",
-        body: form
+        body: form,
       });
       const response = await result.json();
       return response[0];
@@ -39,7 +39,7 @@ export class CouponService {
     const result = await fetch("https://megusta.do/reports/queries", {
       headers: form.getHeaders(),
       method: "POST",
-      body: form
+      body: form,
     });
     const response = await result.json();
     console.log(response);
@@ -53,7 +53,7 @@ export class CouponService {
     const result = await fetch("https://megusta.do/reports/queries/action", {
       headers: form.getHeaders(),
       method: "POST",
-      body: form
+      body: form,
     });
     const response = await result.json();
     // if(response&&response.updated){
@@ -82,27 +82,27 @@ export class CouponService {
                 couponId: coupon.id,
                 isValid: true,
                 deal,
-                hash: coupon.hash
+                hash: coupon.hash,
               };
             } else {
               console.log("This coupon is expired");
               return {
                 error: "Could not redeem coupon, it is expired",
-                isValid: false
+                isValid: false,
               };
             }
           } else {
             console.log("This coupon has been previously redeemed");
             return {
               error: "Could not redeem coupon, it has been previously redeemed",
-              isValid: false
+              isValid: false,
             };
           }
         } else {
           console.log("This coupon does not belong to this merchant");
           return {
             error: "This coupon does not belong to this merchant",
-            isValid: false
+            isValid: false,
           };
         }
       } else {
@@ -120,7 +120,7 @@ export class CouponService {
     const result = await fetch("https://megusta.do/reports/queries", {
       headers: form.getHeaders(),
       method: "POST",
-      body: form
+      body: form,
     });
 
     const response = await result.json();
@@ -137,14 +137,14 @@ export class CouponService {
     const result = await fetch("https://megusta.do/reports/queries", {
       headers: form.getHeaders(),
       method: "POST",
-      body: form
+      body: form,
     });
 
     const response = await result.json();
     console.log(response);
     return response[0];
   }
- 
+
   async redeemConfirmation(id, companyId) {
     const form = new FormData();
     form.append("query", "UPDATE cpnc_DealCoupon SET status=2 WHERE id=" + id);
@@ -153,20 +153,19 @@ export class CouponService {
     const result = await fetch("https://megusta.do/reports/queries/action", {
       headers: form.getHeaders(),
       method: "POST",
-      body: form
+      body: form,
     });
     const response = await result.json();
-    
+
     if (response && response.updated) {
-        console.log("RESPONSEEEE", response);
-      await this.sendConfirmation(id, companyId);
+      console.log("RESPONSEEEE", response);
+      // await this.sendConfirmation(id, companyId);
       return response;
     }
-    
   }
 
   async sendConfirmation(couponId, companyId) {
-    console.log("CHEQUIANDO",couponId, companyId)
+    console.log("CHEQUIANDO", couponId, companyId);
     const form = new FormData();
     form.append("query", "SELECT * FROM cpnc_DealCoupon WHERE id=" + couponId);
 
@@ -174,40 +173,47 @@ export class CouponService {
     const result = await fetch("https://megusta.do/reports/queries", {
       headers: form.getHeaders(),
       method: "POST",
-      body: form
+      body: form,
     });
     const response = await result.json();
     console.log(response);
-    
+
     // const response = await result.json();
 
     const { dealId, userId } = response[0];
 
     const userEmail = await this.getUserEmail(userId);
 
-
-    const fideclubResponse = await fetch('https://api.sunchat.com/v1/stores/'+companyId);
+    const fideclubResponse = await fetch(
+      "https://api.sunchat.com/v1/stores/" + companyId
+    );
     const fideclubData = await fideclubResponse.json();
-    const utils = {terminalId:fideclubData.store.configurations.terminal_id, merchantId:fideclubData.store.merchant_id, storeUser:fideclubData.store.user.id};
+    const utils = {
+      terminalId: fideclubData.store.configurations.terminal_id,
+      merchantId: fideclubData.store.merchant_id,
+      storeUser: fideclubData.store.user.id,
+    };
     console.log(utils);
 
-    const order = await this.makeOrder(userEmail.email,"0.00", utils );
+    const order = await this.makeOrder(userEmail.email, "0.00", utils);
     console.log(order);
-
   }
   async makeOrder(email, amount, utils) {
     const formData = new FormData();
     formData.append("user", utils.storeUser.toString());
     formData.append("customer_phone", email);
-   
+
     formData.append("amount", amount);
     formData.append("terminal_id", utils.terminalId);
     formData.append("merchant_id", utils.merchantId);
     formData.append("game_id", "0");
     formData.append("reference", "PDV-" + utils.terminalId);
-    
+
     try {
-      let result = await fetch("https://api.sunchat.com/v2/orders", {method:"POST", body:formData});
+      let result = await fetch("https://api.sunchat.com/v2/orders", {
+        method: "POST",
+        body: formData,
+      });
       const finalResult = await result.json();
       console.log("EY FINAI", finalResult);
       return finalResult;
