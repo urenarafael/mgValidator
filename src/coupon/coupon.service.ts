@@ -87,27 +87,35 @@ export class CouponService {
             } else {
               console.log("This coupon is expired");
               return {
-                error: "Could not redeem coupon, it is expired",
+                message: "Could not redeem coupon, it is expired",
+                error: true,
                 isValid: false,
               };
             }
           } else {
             console.log("This coupon has been previously redeemed");
             return {
-              error: "Could not redeem coupon, it has been previously redeemed",
+              message:
+                "Could not redeem coupon, it has been previously redeemed",
+              error: true,
               isValid: false,
             };
           }
         } else {
           console.log("This coupon does not belong to this merchant");
           return {
-            error: "This coupon does not belong to this merchant",
+            message: "This coupon does not belong to this merchant",
+            error: true,
             isValid: false,
           };
         }
       } else {
         console.log("This coupon does not exist");
-        return { error: "Coupon does not exist", isValid: false };
+        return {
+          messsage: "Coupon does not exist",
+          error: true,
+          isValid: false,
+        };
       }
     } catch (e) {
       console.log(e);
