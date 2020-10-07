@@ -112,7 +112,7 @@ export class CouponService {
       } else {
         console.log("This coupon does not exist");
         return {
-          messsage: "Coupon does not exist",
+          message: "Coupon does not exist",
           error: true,
           isValid: false,
         };
