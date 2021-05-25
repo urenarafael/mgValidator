@@ -149,7 +149,7 @@ export class CouponService {
 
     const response = await result.json();
     console.log(response);
-    return response
+    return response[0]
   }
 
   async getCompanyEmail(dealId) {
