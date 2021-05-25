@@ -78,12 +78,12 @@ export class CouponService {
           if (status == 1) {
             if (currentDate <= expirationDate) {
               // this.redeemCoupon(coupon.id);
-              const userEmail = await this.getUserEmail(deal?.dealId)
+              const userData = await this.getUserData(deal?.dealId)
               return {
                 couponId: coupon.id,
                 isValid: true,
                 deal,
-                userData: userEmail,
+                userData,
                 hash: coupon.hash,
               };
             } else {
@@ -137,6 +137,21 @@ export class CouponService {
     console.log(response);
     return { email: response[0].email };
   }
+
+  async getUserData(userId) {
+    const form = new FormData();
+    form.append("query", "SELECT * FROM cpnc_User WHERE id = " + userId);
+    const result = await fetch("https://megusta.do/reports/queries", {
+      headers: form.getHeaders(),
+      method: "POST",
+      body: form,
+    });
+
+    const response = await result.json();
+    console.log(response);
+    return response
+  }
+
   async getCompanyEmail(dealId) {
     const form = new FormData();
     form.append(
