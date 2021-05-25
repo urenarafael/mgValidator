@@ -78,10 +78,12 @@ export class CouponService {
           if (status == 1) {
             if (currentDate <= expirationDate) {
               // this.redeemCoupon(coupon.id);
+              const userEmail = await this.getUserEmail(deal?.dealId)
               return {
                 couponId: coupon.id,
                 isValid: true,
                 deal,
+                userData: userEmail,
                 hash: coupon.hash,
               };
             } else {
