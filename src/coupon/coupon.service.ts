@@ -41,8 +41,9 @@ export class CouponService {
       method: "POST",
       body: form,
     });
+    console.log('RESULT GETCOUPON', result)
     const response = await result.json();
-    console.log(response);
+    console.log('RESPONSE result GETCOUPON',response);
     return response[0];
   }
   async redeemCoupon(id) {
