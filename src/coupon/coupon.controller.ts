@@ -7,11 +7,13 @@ export class CouponController {
 
     @Get(':id')
     async getCoupon(@Param('id') id){
+        
         const data = await this.couponService.getCoupon(id);
         return data;
     }
     @Get('/validate/:id/:companyId')
     async validateCoupon(@Param('id') id, @Param('companyId') companyId){
+        console.log('ID IS', id + " company is ", companyId)
         const data = await this.couponService.validateCoupon(id, companyId);
         return data;
     }
