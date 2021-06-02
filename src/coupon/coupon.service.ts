@@ -69,7 +69,7 @@ export class CouponService {
       const coupon = await this.getCoupon(id);
 
       if (coupon && coupon.id) {
-        const { status, dealId } = coupon;
+        const { status, dealId, userId } = coupon;
         const deal = await this.getDeal(dealId);
         console.log("DEAL", deal);
         const expirationDate = new Date(deal.expire * 1000);
@@ -80,7 +80,7 @@ export class CouponService {
           if (status == 1) {
             if (currentDate <= expirationDate) {
               // this.redeemCoupon(coupon.id);
-              const userData = await this.getUserData(deal?.dealId)
+              const userData = await this.getUserData(userId)
               return {
                 couponId: coupon.id,
                 isValid: true,
